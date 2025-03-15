@@ -1,31 +1,57 @@
 package com.ragadox.authentication.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ragadox.authentication.dto.UserDTO;
 import com.ragadox.authentication.entity.UserEntity;
+import com.ragadox.authentication.exceptions.BadRequestException;
+import com.ragadox.authentication.exceptions.JWTAuthenticationException;
 import com.ragadox.authentication.exceptions.ResourceAlreadyExists;
 import com.ragadox.authentication.exceptions.ResourceNotFound;
 import com.ragadox.authentication.repository.UserRepository;
+import com.ragadox.authentication.utils.JwtUtils;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final JwtUtils jwtUtils;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public UserService(UserRepository userRepository, JwtUtils jwtUtils) {
+        this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
-    public UserEntity createUser(UserDTO userDTO) {
-        UserEntity userEntity=new UserEntity(userDTO);
-        Boolean isUsernameTaken=userRepository.existsByUsername(userEntity.getUsername());
-        Boolean isEmailTaken=userRepository.existsByEmail(userEntity.getEmail());
-        if(isUsernameTaken || isEmailTaken){
+    public UserDTO createUser(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity(userDTO);
+        if (userDTO.getPassword() == null) {
+            throw new BadRequestException("Password is required");
+        }
+        Boolean isUsernameTaken = userRepository.existsByUsername(userEntity.getUsername());
+        Boolean isEmailTaken = userRepository.existsByEmail(userEntity.getEmail());
+        if (isUsernameTaken || isEmailTaken) {
             throw new ResourceAlreadyExists(UserEntity.class);
         }
-        return userRepository.save(userEntity);
+        String encodedPassword = bCryptPasswordEncoder.encode(userDTO.getPassword());
+        userEntity.setPasswordHash(encodedPassword);
+        UserEntity newUserEntity = userRepository.save(userEntity);
+        return newUserEntity.toDTO();
     }
 
-    public UserEntity getUserByUsername(String username){
-        return userRepository.findByUsername(username).orElseThrow(()->new ResourceNotFound(UserEntity.class));
+    public String getToken(UserDTO userDTO) throws JsonProcessingException {
+        return jwtUtils.generateToken(userDTO);
+    }
+
+    public UserDTO verifyCredentials(UserDTO userDTO) {
+        UserEntity userEntity =
+                userRepository.findByUsername(userDTO.getUsername()).orElseThrow(() -> new JWTAuthenticationException("Invalid credentials"));
+        if (!bCryptPasswordEncoder.matches(userDTO.getPassword(), userEntity.getPasswordHash())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
+        return userEntity.toDTO();
     }
 }

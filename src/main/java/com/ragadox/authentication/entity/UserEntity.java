@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user",schema = "public")
+@Table(name = "user", schema = "public")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,16 +19,23 @@ public class UserEntity {
     private Long id;
 
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String passwordHash;
 
-    public UserEntity(UserDTO userDTO){
-        this.username=userDTO.getUsername();
-        this.email=userDTO.getEmail();
+
+    public UserEntity(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.email = userDTO.getEmail();
+    }
+
+    public UserDTO toDTO() {
+        return new UserDTO(this);
     }
 }

@@ -8,15 +8,17 @@ import java.util.Map;
 
 @Getter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException {
 
-    private Map<String,String> errorMap;
-    public BadRequestException(String message){
+    private Map<String, String> errorMap;
+
+    public BadRequestException(String message) {
         super(message);
     }
-    public BadRequestException(Map<String,String> errors){
+
+    public BadRequestException(Map<String, String> errors) {
         super();
-        this.errorMap=errors;
+        this.errorMap = errors;
     }
 
 }
