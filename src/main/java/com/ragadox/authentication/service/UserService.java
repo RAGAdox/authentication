@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ragadox.authentication.dto.UserDTO;
 import com.ragadox.authentication.entity.UserEntity;
 import com.ragadox.authentication.exceptions.BadRequestException;
-import com.ragadox.authentication.exceptions.JWTAuthenticationException;
 import com.ragadox.authentication.exceptions.ResourceAlreadyExists;
 import com.ragadox.authentication.repository.UserRepository;
 import com.ragadox.authentication.utils.JwtUtils;
@@ -47,8 +46,8 @@ public class UserService {
     }
 
     public UserDTO verifyCredentials(UserDTO userDTO) {
-        UserEntity userEntity =
-                userRepository.findByUsername(userDTO.getUsername()).orElseThrow(() -> new JWTAuthenticationException("Invalid credentials"));
+        UserEntity userEntity = userRepository.findByUsername(userDTO.getUsername())
+                .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
         if (!bCryptPasswordEncoder.matches(userDTO.getPassword(), userEntity.getPasswordHash())) {
             throw new BadCredentialsException("Invalid credentials");
         }
