@@ -1,8 +1,6 @@
 package com.ragadox.authentication.configurations;
 
 
-import com.ragadox.authentication.exceptions.CustomAuthenticationEntryPoint;
-import com.ragadox.authentication.filters.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +9,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+
+import com.ragadox.authentication.exceptions.CustomAuthenticationEntryPoint;
+import com.ragadox.authentication.filters.JWTAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration

@@ -1,9 +1,10 @@
 package com.ragadox.authentication.dto;
 
-import com.ragadox.authentication.utils.HttpHeadersUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+
+import com.ragadox.authentication.utils.HttpHeadersUtils;
 
 public class SuccessResponseBuilderDTO<T> {
 

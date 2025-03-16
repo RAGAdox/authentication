@@ -3,6 +3,7 @@ package com.ragadox.authentication.dto;
 import com.ragadox.authentication.entity.UserEntity;
 import com.ragadox.authentication.validationGroups.SignInValidationGroup;
 import com.ragadox.authentication.validationGroups.SignUpValidationGroup;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

@@ -1,16 +1,16 @@
 package com.ragadox.authentication.dto;
 
-import com.ragadox.authentication.utils.HttpHeadersUtils;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.http.HttpHeaders;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Map;
-import java.util.Optional;
+import com.ragadox.authentication.utils.HttpHeadersUtils;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter

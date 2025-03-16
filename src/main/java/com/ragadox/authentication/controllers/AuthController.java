@@ -1,6 +1,16 @@
 package com.ragadox.authentication.controllers;
 
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ragadox.authentication.dto.ResponseDTO;
 import com.ragadox.authentication.dto.SuccessResponseBuilderDTO;
@@ -10,13 +20,8 @@ import com.ragadox.authentication.service.UserService;
 import com.ragadox.authentication.utils.ResponseCookieUtils;
 import com.ragadox.authentication.validationGroups.SignInValidationGroup;
 import com.ragadox.authentication.validationGroups.SignUpValidationGroup;
+
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")

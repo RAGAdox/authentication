@@ -1,18 +1,18 @@
 package com.ragadox.authentication.service;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ragadox.authentication.dto.UserDTO;
 import com.ragadox.authentication.entity.UserEntity;
 import com.ragadox.authentication.exceptions.BadRequestException;
 import com.ragadox.authentication.exceptions.JWTAuthenticationException;
 import com.ragadox.authentication.exceptions.ResourceAlreadyExists;
-import com.ragadox.authentication.exceptions.ResourceNotFound;
 import com.ragadox.authentication.repository.UserRepository;
 import com.ragadox.authentication.utils.JwtUtils;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {

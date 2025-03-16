@@ -1,12 +1,13 @@
 package com.ragadox.authentication.dto;
 
-import com.ragadox.authentication.utils.HttpHeadersUtils;
+import java.util.Map;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Map;
+import com.ragadox.authentication.utils.HttpHeadersUtils;
 
 public class ErrorResponseBuilderDTO<T> {
     private HttpStatus status=HttpStatus.INTERNAL_SERVER_ERROR;
